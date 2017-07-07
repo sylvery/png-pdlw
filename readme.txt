@@ -1,1 +1,1 @@
-Papua New Guinea Provinces Districts LLGs & Wards
+Papua New Guinea - Provinces Districts LLGs Wards Villages (PNG-PDLW) is a wordpress plugin which was designed to add custom query functionality to the Papua New Guinea Civil Identity (PNGCIR) Online Application Registry Tool!

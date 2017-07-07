@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @package png_pdlw
+ * @version 1.1
+ */
 /*
 Plugin Name: PNG PDLW
 Plugin URI:  https://developer.wordpress.org/plugins/png-pdlw/
@@ -14,8 +18,11 @@ Domain Path: /geography
 */
 
 global $pngpdlw_db_version;
-$pngpdlw_db_version = '1.0';
+$pngpdlw_db_version = '1.1';
 
+require_once( '/pngpdlw_functions.php' );
+
+// wp_register_script( 'cooltool_ajax', plugins_url( '/js/cooltool_ajax.js');
 function pngpdlw_install() {
 	global $wpdb;
 	global $pngpdlw_db_version;
@@ -36,34 +43,126 @@ function pngpdlw_install() {
 
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 	dbDelta( $sql );
-
 	add_option( 'pngpdlw_db_version', $pngpdlw_db_version );
 }
 
 function pngpdlw_install_data() {
 	global $wpdb;
-	
-	$province = 'Morobe Province';
-	$district = 'Lae District';
-	$llg = 'Lae Urban LLG';
-	$ward = 'Lae City';
-	$village = 'Data Street';
-	
 	$table_name = $wpdb->prefix . 'pngpdlw';
-	
-	$wpdb->insert( 
-		$table_name, 
-		array( 
-			'ProvNAME' => $province, 
-			'DistNAME' => $district, 
-			'LlgNAME' => $llg, 
-			'WardNAME' => $ward, 
-			'VillageNAME' => $village, 
-		) 
-	);
+	echo $table_name;
+	// read external csv file
+	$plugin_path = plugin_dir_path( __FILE__ );
+	// extract data & insert data within a loop
+	// $sampledata = array(
+	// 	'ProvNAME' => 'Morobe Province', 
+	// 	'DistNAME' => 'Lae District', 
+	// 	'LlgNAME' => 'Lae Urban LLG', 
+	// 	'WardNAME' => 'Lae City', 
+	// 	'VillageNAME' => 'Koboni Street', 
+	// 	);
+	// if (($handle = fopen( $plugin_path . 'data.csv','r' )) !== FALSE) {
+	// 	while (($data = fgetcsv($handle,5)) !== FALSE) {
+	// 		echo "data " . $data[0] . "<br />";
+	// 		// $wpdb->insert($table_name,array( $key => $value, ));
+	// 	}
+	// 	fclose($handle);
+	//  // // deprecated
+	// 	// // variables to insert
+	// 	// $province = 'Morobe Province';
+	// 	// $district = 'Lae District';
+	// 	// $llg = 'Lae Urban LLG';
+	// 	// $ward = 'Lae City';
+	// 	// $village = 'Kapiak Street';
+		
+	// 	// // insert data to db
+	// 	// $wpdb->insert( 
+	// 	// 	$table_name, 
+	// 	// 	array( 
+	// 	// 		'ProvNAME' => $province, 
+	// 	// 		'DistNAME' => $district, 
+	// 	// 		'LlgNAME' => $llg, 
+	// 	// 		'WardNAME' => $ward, 
+	// 	// 		'VillageNAME' => $village, 
+	// 	// 	) 
+	// 	// );
+	// 	} else {
+	// 		echo "handle error!" . $handle;
+	// 	}
 }
+
+function pngpdlw_update_db_check() {
+  global $pngpdlw_db_version;
+  if ( get_site_option( 'pngpdlw_db_version' ) != $pngpdlw_db_version ) {
+      pngpdlw_install();
+  }
+}
+add_action( 'plugins_loaded', 'pngpdlw_update_db_check' );
 
 register_activation_hook( __FILE__, 'pngpdlw_install' );
 register_activation_hook( __FILE__, 'pngpdlw_install_data' );
+
+function function_pngpdlw_form(){
+  $html = '
+  <div id="pngpdlw_form">
+    <form id="lookuptool" class="form form-horizontal" action="">
+      <p id="provinces" class="form-group">
+        <label class="col-sm-3 control-label">Province</label>
+        <select id="province" class="col-sm-9 form-control">
+        	<option value="empty">Select Province</option>
+        	<option value="Autonomous Region of Bougainville">Autonomous Region of Bougainville</option>
+        	<option value="Central Province">Central Province</option>
+        	<option value="Chimbu (Simbu) Province">Chimbu (Simbu) Province</option>
+        	<option value="East New Britain Province">East New Britain Province</option>
+        	<option value="East Sepik Province">East Sepik Province</option>
+        	<option value="Eastern Highlands Province">Eastern Highlands Province</option>
+        	<option value="Enga Province">Enga Province</option>
+        	<option value="Gulf Province">Gulf Province</option>
+        	<option value="Hela Province">Hela Province</option>
+        	<option value="Jiwaka Province">Jiwaka Province</option>
+        	<option value="Madang Province">Madang Province</option>
+        	<option value="Manus Province">Manus Province</option>
+        	<option value="Milne Bay Province">Milne Bay Province</option>
+        	<option value="Morobe Province">Morobe Province</option>
+        	<option value="National Capital District">National Capital District</option>
+        	<option value="New Ireland Province">New Ireland Province</option>
+        	<option value="Northern (Oro) Province">Northern (Oro) Province</option>
+        	<option value="Southern Highlands Province">Southern Highlands Province</option>
+        	<option value="West New Britain Province">West New Britain Province</option>
+        	<option value="West Sepik (Sandaun) Province">West Sepik (Sandaun) Province</option>
+        	<option value="Western Highlands Province">Western Highlands Province</option>
+        	<option value="Western Province">Western Province</option>
+        </select>
+      </p>
+      <p id="districts" class="hidden form-group">
+        <label class="col-sm-3 control-label">District</label>
+        <select id="district" class="col-sm-3 form-control">
+        	<option value="empty">Select District</option>
+        </select>
+      </p>
+      <p id="llgs" class="hidden form-group">
+        <label class="col-sm-3 control-label">LLG</label>
+        <select id="llg" class="col-sm-3 form-control">
+        	<option value="empty">Select Local Level Govt</option>
+        </select>
+      </p>
+      <p id="wards" class="hidden form-group">
+        <label class="col-sm-3 control-label">Ward</label>
+        <select id="ward" class="col-sm-3 form-control">
+        	<option value="empty">Select Ward</option>
+        </select>
+      </p>
+      <p id="villages" class="hidden form-group">
+        <label class="col-sm-3 control-label">Village</label>
+        <select id="village" class="col-sm-3 form-control">
+        	<option value="empty">Select Village</option>
+        </select>
+      </p>
+    </form>
+  </div>
+  <div id="message" class="block blockquote"></div>
+  ';
+  return $html;
+}
+add_shortcode( 'pngpdlw_form', 'function_pngpdlw_form' );
 
 ?>
