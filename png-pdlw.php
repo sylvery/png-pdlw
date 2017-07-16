@@ -21,6 +21,7 @@ global $pngpdlw_db_version;
 $pngpdlw_db_version = '1.1';
 
 require_once( '/pngpdlw_functions.php' );
+require_once( dirname(__FILE__) . '/admin/admin-init.php' );
 
 // wp_register_script( 'cooltool_ajax', plugins_url( '/js/cooltool_ajax.js');
 function pngpdlw_install() {
@@ -102,57 +103,40 @@ register_activation_hook( __FILE__, 'pngpdlw_install' );
 register_activation_hook( __FILE__, 'pngpdlw_install_data' );
 
 function function_pngpdlw_form(){
+	global $sudotech_pngpdwlv;
+	if ($sudotech_pngpdwlv['radio_formlabels'] === '2') {
+		$labelClass = ' hidden ';
+	}
   $html = '
   <div id="pngpdlw_form">
+  	<div id="form-header">'.$sudotech_pngpdwlv['form_header'].'</div>
     <form id="lookuptool" class="form form-horizontal" action="">
       <p id="provinces" class="form-group">
-        <label class="col-sm-3 control-label">Province</label>
+        <label class="'.$labelClass.'col-sm-3 control-label">Province</label>
         <select id="province" class="col-sm-9 form-control">
         	<option value="empty">Select Province</option>
-        	<option value="Autonomous Region of Bougainville">Autonomous Region of Bougainville</option>
-        	<option value="Central Province">Central Province</option>
-        	<option value="Chimbu (Simbu) Province">Chimbu (Simbu) Province</option>
-        	<option value="East New Britain Province">East New Britain Province</option>
-        	<option value="East Sepik Province">East Sepik Province</option>
-        	<option value="Eastern Highlands Province">Eastern Highlands Province</option>
-        	<option value="Enga Province">Enga Province</option>
-        	<option value="Gulf Province">Gulf Province</option>
-        	<option value="Hela Province">Hela Province</option>
-        	<option value="Jiwaka Province">Jiwaka Province</option>
-        	<option value="Madang Province">Madang Province</option>
-        	<option value="Manus Province">Manus Province</option>
-        	<option value="Milne Bay Province">Milne Bay Province</option>
-        	<option value="Morobe Province">Morobe Province</option>
-        	<option value="National Capital District">National Capital District</option>
-        	<option value="New Ireland Province">New Ireland Province</option>
-        	<option value="Northern (Oro) Province">Northern (Oro) Province</option>
-        	<option value="Southern Highlands Province">Southern Highlands Province</option>
-        	<option value="West New Britain Province">West New Britain Province</option>
-        	<option value="West Sepik (Sandaun) Province">West Sepik (Sandaun) Province</option>
-        	<option value="Western Highlands Province">Western Highlands Province</option>
-        	<option value="Western Province">Western Province</option>
         </select>
       </p>
       <p id="districts" class="hidden form-group">
-        <label class="col-sm-3 control-label">District</label>
+        <label class="'.$labelClass.'col-sm-3 control-label">District</label>
         <select id="district" class="col-sm-3 form-control">
         	<option value="empty">Select District</option>
         </select>
       </p>
       <p id="llgs" class="hidden form-group">
-        <label class="col-sm-3 control-label">LLG</label>
+        <label class="'.$labelClass.'col-sm-3 control-label">LLG</label>
         <select id="llg" class="col-sm-3 form-control">
         	<option value="empty">Select Local Level Govt</option>
         </select>
       </p>
       <p id="wards" class="hidden form-group">
-        <label class="col-sm-3 control-label">Ward</label>
+        <label class="'.$labelClass.'col-sm-3 control-label">Ward</label>
         <select id="ward" class="col-sm-3 form-control">
         	<option value="empty">Select Ward</option>
         </select>
       </p>
       <p id="villages" class="hidden form-group">
-        <label class="col-sm-3 control-label">Village</label>
+        <label class="'.$labelClass.'col-sm-3 control-label">Village</label>
         <select id="village" class="col-sm-3 form-control">
         	<option value="empty">Select Village</option>
         </select>
@@ -160,6 +144,8 @@ function function_pngpdlw_form(){
     </form>
   </div>
   <div id="message" class="block blockquote"></div>
+	<div id="form-header">'.$sudotech_pngpdwlv['form_footer'].'</div>
+	<div class="social social-icons">'.$sudotech_pngpdwlv['share_icons'].'</div>
   ';
   return $html;
 }
