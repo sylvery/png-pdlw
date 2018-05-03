@@ -1,7 +1,7 @@
 let $ = jQuery;
 $(document).ready(()=>{
 	$.post(cooltool_ajax_obj.ajax_url,{
-		action: 'pngpdlw_reqHandler',
+		action: 'pngpdlwv_reqHandler',
 		security_string: cooltool_ajax_obj.nonce,
 		province: 'none',
 		get: 'provinces',
@@ -18,6 +18,6 @@ $(document).ready(()=>{
 		console.log("error");
 	})
 	.always(function() {
-		console.log("----------------------------> complete <----------------------------");
+		console.log("----------------------------> complete province only <----------------------------");
 	});
 });

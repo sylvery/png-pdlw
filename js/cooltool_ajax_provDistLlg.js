@@ -1,7 +1,7 @@
 let $ = jQuery;
 $(document).ready(()=>{
 	$.post(cooltool_ajax_obj.ajax_url,{
-		action: 'pngpdlw_reqHandler',
+		action: 'pngpdlwv_reqHandler',
 		security_string: cooltool_ajax_obj.nonce,
 		province: 'none',
 		get: 'provinces',
@@ -18,7 +18,7 @@ $(document).ready(()=>{
 		console.log("error");
 	})
 	.always(function() {
-		console.log("----------------------------> complete <----------------------------");
+		console.log("----------------------------> complete llgs <----------------------------");
 	});
 
 	$('#province')
@@ -34,7 +34,7 @@ $(document).ready(()=>{
 			}
 			// ajax request
 			$.post(cooltool_ajax_obj.ajax_url,{
-				action: 'pngpdlw_reqHandler',
+				action: 'pngpdlwv_reqHandler',
 				security_string: cooltool_ajax_obj.nonce,
 				province: $('#province').val(),
 				get: 'districts',
@@ -53,7 +53,7 @@ $(document).ready(()=>{
 				console.log("error");
 			})
 			.always(function() {
-				console.log("----------------------------> complete <----------------------------");
+				console.log("----------------------------> complete llgs <----------------------------");
 			});
 		});
 	$('#district')
@@ -70,7 +70,7 @@ $(document).ready(()=>{
 			}
 			// ajax request
 			$.post(cooltool_ajax_obj.ajax_url,{
-				action: 'pngpdlw_reqHandler',
+				action: 'pngpdlwv_reqHandler',
 				security_string: cooltool_ajax_obj.nonce,
 				province: $('#province').val(),
 				district: $('#district').val(),
@@ -90,7 +90,7 @@ $(document).ready(()=>{
 				console.log("error");
 			})
 			.always(function() {
-				console.log("----------------------------> complete <----------------------------");
+				console.log("----------------------------> complete llgs <----------------------------");
 			});
 		});
 });

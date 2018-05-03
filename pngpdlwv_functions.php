@@ -21,14 +21,12 @@ function cooltool_enqueue( $hook ) {
 				wp_enqueue_script('cooltool_ajax',plugins_url( '/js/cooltool_ajax_provDist.js', __FILE__ ),array('jquery'));
 			}
 		} else {
-			wp_enqueue_script('cooltool_ajax',plugins_url( '/js/cooltool_ajax_provOnly.js', __FILE__ ),array('jquery'));
+			wp_enqueue_script('cooltool_ajax',plugins_url( '/js/cooltool_ajax_prov.js', __FILE__ ),array('jquery'));
 		}
-	} else {
-		wp_enqueue_script('cooltool_ajax',plugins_url( '/js/cooltool_ajax.js', __FILE__ ),array('jquery'));
 	}
-	wp_enqueue_script('cooltool_ajax',plugins_url( '/js/cooltool_ajax.js', __FILE__ ),array('jquery'));
 	wp_enqueue_style( 'bootstrap_theme', plugins_url( '/css/bootstrap-theme.css', __FILE__ ) );
 	wp_enqueue_style( 'bootstrap_forms', plugins_url( '/css/bootstrap.css', __FILE__ ) );
+	wp_enqueue_style( 'styles', plugins_url( '/css/style.css', __FILE__ ) );
 	$nonce = wp_create_nonce('cooltool');
 	wp_localize_script( 'cooltool_ajax', 'cooltool_ajax_obj', array(
 		'ajax_url' => admin_url( 'admin-ajax.php' ),
@@ -36,16 +34,37 @@ function cooltool_enqueue( $hook ) {
 		) );
 }
 
+function textfield_sanitize ($arg) {
+	$arg = sanitize_text_field( $arg );
+	if (strlen($arg)>33) {
+		$arg = substr($arg, 0,33);
+	}
+	return $arg;
+}
+
 function reqHandler() {
 	check_ajax_referer( 'cooltool', 'security_string' );
 	if (empty($_POST)) die('Nothing sent via $_POST');
 	global $wpdb;
-	$table = $wpdb->prefix . "pngpdlw";
-	$province = $_POST['province'];
-	$district = $_POST['district'];
-	$llg = $_POST['llg'];
-	$ward = $_POST['ward'];
-	$what = $_POST['get'];
+	$table = $wpdb->prefix . "pngpdlwv";
+	// validate variables available to the public before going any further
+	/* 
+		validation rules
+		> variable must contain no more than 35 characters
+		> characters should contain all alphabets, numbers, fullstop, short-dash and forward slashes only
+		> validate by variable as they are passed in
+
+		isset() and empty() for checking whether a variable exists and isn’t blank
+		mb_strlen() or strlen() for checking that a string has the e xpected number of characters
+		preg_match(), strpos() for checking for occurrences of certain strings in other strings
+		count() for checking how many items are in an array
+		in_array() for checking whether something exists in an array
+	*/
+	$province = textfield_sanitize($_POST['province']);
+	$district = textfield_sanitize($_POST['district']);
+	$llg = textfield_sanitize($_POST['llg']);
+	$ward = textfield_sanitize($_POST['ward']);
+	$what = textfield_sanitize($_POST['get']);
 
 	switch ( $what ) {
 		case 'provinces':
@@ -70,7 +89,7 @@ function reqHandler() {
 	wp_send_json( $wpdb->get_results( $wpdb->prepare($dbquery), OBJECT ) );
 	die();
 }
-add_action( 'wp_ajax_pngpdlw_reqHandler', 'reqHandler' );
-add_action( 'wp_ajax_nopriv_pngpdlw_reqHandler', 'reqHandler' );
+add_action( 'wp_ajax_pngpdlwv_reqHandler', 'reqHandler' );
+add_action( 'wp_ajax_nopriv_pngpdlwv_reqHandler', 'reqHandler' );
 
 ?>

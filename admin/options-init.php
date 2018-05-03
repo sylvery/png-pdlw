@@ -23,14 +23,14 @@
 
     $args = array(
         'opt_name' => 'sudotech_pngpdwlv',
-        'dev_mode' => TRUE,
+        'dev_mode' => FALSE,
         'display_name' => 'PNG PDWLV',
-        'display_version' => '0.2.0',
+        'display_version' => '1.0.2',
         'page_slug' => 'sudotech_pngpdwlv_options',
         'page_title' => 'PNG PDLWV Options',
         'update_notice' => TRUE,
-        'intro_text' => '<p>This text is displayed above the options panel. It isn\’t required, but more info is always better! The intro_text field accepts all HTML.</p>’',
-        'footer_text' => '<p>This text is displayed below the options panel. It isn\’t required, but more info is always better! The footer_text field accepts all HTML.</p>',
+        'intro_text' => '<p>Use this options page to customize the tool to suit your requirements.</p>’',
+        'footer_text' => '<p>Developed by <a href="fb.me/sylver.yagi">Sylver Yagi</a>.</p>',
         'admin_bar' => TRUE,
         'menu_type' => 'menu',
         'menu_title' => 'PNG PDLWV',

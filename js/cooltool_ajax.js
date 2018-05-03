@@ -1,7 +1,7 @@
 let $ = jQuery;
 $(document).ready(()=>{
 	$.post(cooltool_ajax_obj.ajax_url,{
-		action: 'pngpdlw_reqHandler',
+		action: 'pngpdlwv_reqHandler',
 		security_string: cooltool_ajax_obj.nonce,
 		province: 'none',
 		get: 'provinces',
@@ -18,15 +18,16 @@ $(document).ready(()=>{
 		console.log("error");
 	})
 	.always(function() {
-		console.log("----------------------------> complete <----------------------------");
+		// console.log("----------------------------> complete main <----------------------------");
 	});
 
 	$('#province')
 		.on('change',()=>{
-			// toggle class: hidden
+			// empty contents of district before populating with new data
 			$('#district')
 				.children()
 				.remove();
+			// toggle class: hidden
 			$('#districts').removeClass('hidden');
 			$('#llgs').addClass('hidden');
 			$('#wards').addClass('hidden');
@@ -36,7 +37,7 @@ $(document).ready(()=>{
 			}
 			// ajax request
 			$.post(cooltool_ajax_obj.ajax_url,{
-				action: 'pngpdlw_reqHandler',
+				action: 'pngpdlwv_reqHandler',
 				security_string: cooltool_ajax_obj.nonce,
 				province: $('#province').val(),
 				get: 'districts',
@@ -55,7 +56,7 @@ $(document).ready(()=>{
 				console.log("error");
 			})
 			.always(function() {
-				console.log("----------------------------> complete <----------------------------");
+				// console.log("----------------------------> complete main <----------------------------");
 			});
 		});
 	$('#district')
@@ -72,7 +73,7 @@ $(document).ready(()=>{
 			}
 			// ajax request
 			$.post(cooltool_ajax_obj.ajax_url,{
-				action: 'pngpdlw_reqHandler',
+				action: 'pngpdlwv_reqHandler',
 				security_string: cooltool_ajax_obj.nonce,
 				province: $('#province').val(),
 				district: $('#district').val(),
@@ -92,7 +93,7 @@ $(document).ready(()=>{
 				console.log("error");
 			})
 			.always(function() {
-				console.log("----------------------------> complete <----------------------------");
+				// console.log("----------------------------> complete main <----------------------------");
 			});
 		});
 	$('#llg')
@@ -108,7 +109,7 @@ $(document).ready(()=>{
 			}
 			// ajax request
 			$.post(cooltool_ajax_obj.ajax_url,{
-				action: 'pngpdlw_reqHandler',
+				action: 'pngpdlwv_reqHandler',
 				security_string: cooltool_ajax_obj.nonce,
 				province: $('#province').val(),
 				district: $('#district').val(),
@@ -129,7 +130,7 @@ $(document).ready(()=>{
 				console.log("error");
 			})
 			.always(function() {
-				console.log("----------------------------> complete <----------------------------");
+				// console.log("----------------------------> complete main <----------------------------");
 			});
 		});
 	$('#ward')
@@ -142,7 +143,7 @@ $(document).ready(()=>{
 			if ($('#ward').val() === 'empty') $('#villages').addClass('hidden');
 			// ajax request
 			$.post(cooltool_ajax_obj.ajax_url,{
-				action: 'pngpdlw_reqHandler',
+				action: 'pngpdlwv_reqHandler',
 				security_string: cooltool_ajax_obj.nonce,
 				province: $('#province').val(),
 				district: $('#district').val(),
@@ -164,7 +165,7 @@ $(document).ready(()=>{
 				console.log("error");
 			})
 			.always(function() {
-				console.log("----------------------------> complete <----------------------------");
+				// console.log("----------------------------> complete main <----------------------------");
 			});
 		});
 	}
