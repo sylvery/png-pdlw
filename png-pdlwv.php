@@ -2,13 +2,13 @@
 
 /**
  * @package png_pdlwv
- * @version 1.2.2
+ * @version 1.2.3
  */
 /*
 Plugin Name: PNG PDLWV
 Plugin URI:  https://developer.wordpress.org/plugins/png-pdlw/
 Description: Papua New Guinea Provinces Districts LLGs & Wards
-Version:     1.2.2
+Version:     1.2.3
 Author:      Sudo Tech
 Author URI:  http://sudotech.biz
 License:     GPL2
@@ -31,7 +31,7 @@ along with PNG PDLWV. If not, see {URI to Plugin License}.
 */
 
 global $pngpdlwv_db_version;
-$pngpdlwv_db_version = '1.2.2';
+$pngpdlwv_db_version = '1.2.3';
 
 // load required files
 
@@ -45,10 +45,16 @@ if (file_exists( dirname(__FILE__) . '/inc/shortcodes.php' )){
     require_once( dirname(__FILE__) . '/inc/shortcodes.php' );
 }
 
+if ( file_exists( dirname(__FILE__) . '/inc/hooks/activate.php')) {
+	require_once( dirname(__FILE__) . '/inc/hooks/activate.php');
+}
+if ( file_exists( dirname(__FILE__) . '/inc/hooks/deactivate.php')) {
+	require_once( dirname(__FILE__) . '/inc/hooks/deactivate.php');
+}
+if ( file_exists( dirname(__FILE__) . '/inc/hooks/uninstall.php')) {
+	require_once( dirname(__FILE__) . '/inc/hooks/uninstall.php');
+}
 // hooks
-register_activation_hook( dirname(__FILE__) . '/inc/hooks/activate.php' , 'pngpdlwv_activate' );
-register_deactivation_hook( dirname(__FILE__) . '/inc/hooks/deactivate.php' , 'pngpdlwv_deactivate' );
-register_uninstall_hook( dirname(__FILE__) . '/inc/hooks/uninstall.php' , 'pngpdlwv_uninstall' );
 
 
 // wp_register_script( 'cooltool_ajax', plugins_url( '/js/cooltool_ajax.js'); // see pngpdlwv_functions.php line 4, its registered there 
