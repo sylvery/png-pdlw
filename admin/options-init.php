@@ -25,7 +25,7 @@
         'opt_name' => 'sudotech_pngpdwlv',
         'dev_mode' => FALSE,
         'display_name' => 'PNG PDWLV',
-        'display_version' => '1.0.2',
+        'display_version' => '1.2.2',
         'page_slug' => 'sudotech_pngpdwlv_options',
         'page_title' => 'PNG PDLWV Options',
         'update_notice' => TRUE,
